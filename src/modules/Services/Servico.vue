@@ -239,7 +239,7 @@
                   <img
                     src="../../assets/images/bg-1.webp"
                     alt="interior design"
-                    class="services-animated-grid-image object-cover"
+                    class="services-animated-grid-image object-cover "
                   />
                 </div>
               </div>

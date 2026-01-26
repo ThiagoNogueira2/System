@@ -77,7 +77,7 @@
   <div class="relative px-10 pb-40 ">
     <div class="relative project-image-container" ref="imageContainer3">
       <img
-        src="../../assets/images/project-3.webp"
+        src="../../assets/images/projeto-5.jpg"
         alt="project-image3"
         class="h-[85vh] w-[1650px] max-w-[1800px] object-cover"
       />

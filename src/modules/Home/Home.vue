@@ -1,10 +1,9 @@
 <template>
-  <div class="container1 home homeClass flex justify-between">
+  <div class="container1 flex justify-between">
     <div class="logo-tipo">
       <img src="@/assets/images/logo.svg" alt="logo-tipo" />
     </div>
-
-    <div class="menu flex items-center">
+    <div class="flex items-center">
       <ul class="flex gap-6">
         <li>About</li>
         <li>Services</li>
@@ -17,24 +16,19 @@
   </div>
 
   <div class="container1">
-    <div
-      class="relative overflow-hidden max-h-[85vh] min-h-[85vh] mb-10 ml-auto "
-    >
+    <div class="relative min-h-[85vh] mb-10">
       <div
-        ref="backgroundImage"
-        class="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat bg-fixed"
+        class="absolute w-full h-full bg-cover bg-center bg-fixed"
         style="
           background-image: url('https://cdn.prod.website-files.com/69737a57e219ee8afab8550b/69737a5ae219ee8afab8561f_hero-bg-sky.webp');
         "
       ></div>
 
       <div
-        ref="titleContainer"
-        class="absolute z-[2] inline-flex mr-auto ml-auto px-10 lg:px-16 md:px-5 page-title-position text-black mix-blend-overlay"
+        class="absolute px-10 lg:px-14 md:px-5 page-title-position mix-blend-overlay"
       >
-        <h1
-          class="inline-flex font-bold leading-none satoshi-font large-title-size"
-        >
+        <h1 class="font-bold leading-none satoshi-font large-title-size">
+
           <span
             v-for="(letter, index) in 'WOODLAND'.split('')"
             :key="index"
@@ -43,19 +37,50 @@
           >
             {{ letter === " " ? "\u00A0" : letter }}
           </span>
+
         </h1>
       </div>
 
       <div
-        ref="foregroundImage"
-        class="absolute inset-0 z-[3] bg-no-repeat bg-fixed bg-[position:50%_0%]"
+        class="absolute inset-0 bg-no-repeat bg-fixed bg-[position:50%_0%]"
         style="
           background-image: url('https://cdn.prod.website-files.com/69737a57e219ee8afab8550b/69737a5ae219ee8afab85623_hero-fg.webp');
         "
       ></div>
+
+      <div class="absolute inset-0 z-[4] flex overflow-hidden text-[var(--black)]">
+        <div class="w-1/2 bg-[var(--white)]" ref="leftOverlay"></div>
+        <div class="w-1/2 bg-[var(--white)]" ref="rightOverlay"></div>
+      </div>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { animations, initOverlayAnimation } from "./animations";
+import { ref, onMounted } from "vue";
+import { useGSAP } from "../../composables/useGSAP";
+
+const { useAutoCleanup, initHomeAnimations, gsap } = useGSAP();
+
+const backgroundImage = ref<HTMLElement | null>(null);
+const foregroundImage = ref<HTMLElement | null>(null);
+const titleContainer = ref<HTMLElement | null>(null);
+const leftOverlay = ref<HTMLElement | null>(null);
+const rightOverlay = ref<HTMLElement | null>(null);
+
+useAutoCleanup();
+initHomeAnimations(
+  backgroundImage,
+  foregroundImage,
+  titleContainer,
+  animations
+);
+
+onMounted(() => {
+  initOverlayAnimation(leftOverlay, rightOverlay, gsap);
+});
+</script>
 
 <style scoped>
 .page-title-position {
@@ -79,19 +104,4 @@
   font-size: 14.5vw;
 }
 </style>
-
-<script setup lang="ts">
-import { animations } from './animations';
-import { ref } from 'vue';
-import { useGSAP } from '../../composables/useGSAP';
-
-const { useAutoCleanup, initHomeAnimations } = useGSAP();
-
-const backgroundImage = ref<HTMLElement | null>(null);
-const foregroundImage = ref<HTMLElement | null>(null);
-const titleContainer = ref<HTMLElement | null>(null);
-
-useAutoCleanup();
-initHomeAnimations(backgroundImage, foregroundImage, titleContainer, animations);
-</script>
 

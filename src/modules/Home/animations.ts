@@ -1,3 +1,5 @@
+import type { Ref } from 'vue';
+
 export const animations = `
 .letter-animation {
   transform: translateY(50px);
@@ -45,4 +47,26 @@ export const animations = `
   }
 }
 `;
+
+export const initOverlayAnimation = (
+  leftOverlay: Ref<HTMLElement | null>,
+  rightOverlay: Ref<HTMLElement | null>,
+  gsap: any
+) => {
+  if (gsap && leftOverlay.value && rightOverlay.value) {
+    gsap.to(leftOverlay.value, {
+      x: '-100%',
+      duration: 1.2,
+      ease: 'power2.inOut',
+      delay: 0.2,
+    });
+    
+    gsap.to(rightOverlay.value, {
+      x: '100%',
+      duration: 1.2,
+      ease: 'power2.inOut',
+      delay: 0.2,
+    });
+  }
+};
 

@@ -1,20 +1,21 @@
 <template>
-  <div class="px-10 pt-4 ">
-    <h1 class="text-7xl pt-[35px] pb-8 font-bold satoshi-font text-[#1e1e1e]">
-      PROJECTS
-    </h1>
-  </div>
+  <div id="project-module-container" class="project-module-wrapper">
+    <div class="px-10 pt-4 ">
+      <h1 class="text-7xl pt-[35px] pb-8 font-bold satoshi-font text-[#1e1e1e]">
+        PROJECTS
+      </h1>
+    </div>
 
-  <div class="relative px-10 pb-40 ">
-    <div class="relative" ref="imageContainer1">
+    <div class="relative px-10 pb-40 ">
+      <div class="relative project-image-container" ref="imageContainer1">
       <img
-        src="../../assets/images/projeto-1.jpeg"
+        src="../../assets/images/projeto-2.jpg"
         alt="project-image"
-        class="h-[85vh] w-[1620px] max-w-[1800px] object-fill"
+        class="h-[85vh] w-[1620px] max-w-[1800px] object-cover"
       />
       
       <div class="absolute inset-0 z-[4] overflow-hidden">
-        <div class="w-full h-full bg-white" ref="imageOverlay1"></div>
+        <div class="w-full h-full bg-white project-image-overlay" ref="imageOverlay1"></div>
       </div>
     </div>
 
@@ -40,15 +41,15 @@
   </div>
 
   <div class="relative px-10 pb-40 flex justify-end">
-    <div class="relative" ref="imageContainer2">
+    <div class="relative project-image-container" ref="imageContainer2">
       <img
-        src="../../assets/images/project-2.jpeg"
+        src="../../assets/images/projeto-3.jpg"
         alt="project-image"
         class="h-[85vh] w-[1650px] max-w-[1800px] object-cover"
       />
       
       <div class="absolute inset-0 z-[4] overflow-hidden">
-        <div class="w-full h-full bg-white" ref="imageOverlay2"></div>
+        <div class="w-full h-full bg-white project-image-overlay" ref="imageOverlay2"></div>
       </div>
     </div>
 
@@ -74,7 +75,7 @@
   </div>
 
   <div class="relative px-10 pb-40 ">
-    <div class="relative" ref="imageContainer3">
+    <div class="relative project-image-container" ref="imageContainer3">
       <img
         src="../../assets/images/project-3.webp"
         alt="project-image3"
@@ -82,7 +83,7 @@
       />
       
       <div class="absolute inset-0 z-[4] overflow-hidden">
-        <div class="w-full h-full bg-white" ref="imageOverlay3"></div>
+        <div class="w-full h-full bg-white project-image-overlay" ref="imageOverlay3"></div>
       </div>
     </div>
 
@@ -106,11 +107,12 @@
       </p>
     </div>
   </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { animations, initImageOverlayAnimation, initImageOverlayAnimationRight } from "./animations";
-import { ref, onMounted, onUnmounted } from "vue";
+import { initImageOverlayAnimation, initImageOverlayAnimationRight } from "./animations";
+import { ref, onMounted } from "vue";
 import { useGSAP } from "../../composables/useGSAP";
 
 const { gsap, ScrollTrigger, useAutoCleanup } = useGSAP();

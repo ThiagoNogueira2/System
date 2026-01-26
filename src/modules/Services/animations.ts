@@ -1,11 +1,11 @@
 export const animations = `
-.animated-grid-image {
+.services-animated-grid-image {
   width: 300px;
   height: 100%;
   display: block;
 }
 
-.image-wrapper {
+.services-image-wrapper {
   overflow: hidden;
   width: 300px;
   will-change: transform;
@@ -47,40 +47,42 @@ export const animations = `
 }
 
 /* Estado inicial da imagem - sempre começa oculta */
-.expand-enter-from .image-wrapper .animated-grid-image {
+.expand-enter-from .services-image-wrapper .services-animated-grid-image {
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
 }
 
 /* Animação da imagem - expande de cima para baixo */
-.expand-enter-active .image-wrapper .animated-grid-image {
+.expand-enter-active .services-image-wrapper .services-animated-grid-image {
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
   animation: revealDown 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   will-change: clip-path;
 }
 
-.expand-leave-active .image-wrapper .animated-grid-image {
+.expand-leave-active .services-image-wrapper .services-animated-grid-image {
   animation: hideUp 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   will-change: clip-path;
 }
 
 /* Animação do texto - aparece depois da imagem */
-.content-text {
+.services-content-text {
   opacity: 0;
   transform: translateY(20px);
   will-change: opacity, transform;
+  max-width: 400px;
+  flex: 1 1 auto;
 }
 
-.expand-enter-active .content-text {
+.expand-enter-active .services-content-text {
   animation: fadeInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   animation-delay: 0.6s;
 }
 
-.expand-leave-active .content-text {
+.expand-leave-active .services-content-text {
   animation: fadeOut 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 /* Quando o texto precisa aparecer (após animação da imagem) */
-.content-text.animate-text {
+.services-content-text.animate-text {
   animation: fadeInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   animation-delay: 0.6s;
 }
@@ -128,6 +130,12 @@ export const animations = `
 
 import type { Ref } from 'vue';
 
+declare global {
+  interface Window {
+    ScrollTrigger: any;
+  }
+}
+
 export const initServicesAnimations = (
   servicesContainer: Ref<HTMLElement | null>,
   onItemOpen: () => void
@@ -143,10 +151,12 @@ export const initServicesAnimations = (
 
 
   const animateVisibleTexts = () => {
-    document.querySelectorAll('.content-text').forEach((el) => {
-      if (el instanceof HTMLElement) {
+    if (!servicesContainer.value) return;
+    const container = servicesContainer.value;
+    container.querySelectorAll('.services-content-text').forEach((el) => {
+      if (el instanceof HTMLElement && container.contains(el)) {
         const parent = el.parentElement?.parentElement;
-        if (parent && window.getComputedStyle(parent).display !== 'none') {
+        if (parent && container.contains(parent) && window.getComputedStyle(parent).display !== 'none') {
           el.classList.add('animate-text');
         }
       }
@@ -155,11 +165,14 @@ export const initServicesAnimations = (
 
 
   const animateTextOnOpen = () => {
+    if (!servicesContainer.value) return;
     requestAnimationFrame(() => {
-      document.querySelectorAll('.content-text').forEach((el) => {
-        if (el instanceof HTMLElement) {
-          const container = el.closest('.expand-enter-to, .expand-enter-active');
-          if (container) {
+      const container = servicesContainer.value;
+      if (!container) return;
+      container.querySelectorAll('.services-content-text').forEach((el) => {
+        if (el instanceof HTMLElement && container.contains(el)) {
+          const expandContainer = el.closest('.expand-enter-to, .expand-enter-active');
+          if (expandContainer && container.contains(expandContainer)) {
             el.classList.remove('animate-text');
             requestAnimationFrame(() => {
               el.classList.add('animate-text');
@@ -167,6 +180,13 @@ export const initServicesAnimations = (
           }
         }
       });
+      
+      // Atualiza ScrollTrigger após mudança no layout
+      if (window.ScrollTrigger) {
+        setTimeout(() => {
+          window.ScrollTrigger.refresh();
+        }, 500);
+      }
     });
   };
 

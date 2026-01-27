@@ -393,14 +393,24 @@ export const initServicesAnimations = (
   const animateImageReveal = (image: HTMLElement) => {
     if (!gsap || !image) return;
     
-    setTimeout(() => {
+    // Evita animação duplicada
+    if (image.dataset.animating === 'true') return;
+    image.dataset.animating = 'true';
+    
+    requestAnimationFrame(() => {
       const imageWidth = image.offsetWidth;
       const imageHeight = image.offsetHeight;
-      if (!imageWidth || !imageHeight) return;
+      if (!imageWidth || !imageHeight) {
+        image.dataset.animating = '';
+        return;
+      }
 
       gsap.killTweensOf(image);
       image.style.clipPath = '';
       image.style.transition = 'none';
+      
+      const isMobile = window.innerWidth <= 768;
+      const duration = isMobile ? 0.9 : 1.3;
       
       gsap.set(image, {
         clipPath: `polygon(0 0, ${imageWidth}px 0, ${imageWidth}px 0, 0 0)`
@@ -410,11 +420,14 @@ export const initServicesAnimations = (
       
       gsap.to(image, {
         clipPath: `polygon(0 0, ${imageWidth}px 0, ${imageWidth}px ${imageHeight}px, 0 ${imageHeight}px)`,
-        duration: 1.3,
-        ease: 'power2.inOut',
-        force3D: true
+        duration: duration,
+        ease: isMobile ? 'power2.out' : 'power2.inOut',
+        force3D: true,
+        onComplete: () => {
+          image.dataset.animating = '';
+        }
       });
-    }, 50);
+    });
   };
 
   const animateVisibleTexts = () => {
@@ -477,30 +490,48 @@ export const initServicesAnimations = (
   );
 
   let mutationObserver: MutationObserver | null = null;
+  let isInitialMount = true;
+  let rafPending: number | null = null;
 
   const checkContainer = () => {
     if (servicesContainer.value) {
       observer.observe(servicesContainer.value);
       
-      mutationObserver = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-            const target = mutation.target as HTMLElement;
-            if (target.classList.contains('expand-enter-active') || target.classList.contains('expand-enter-to')) {
-              const image = target.querySelector('.services-animated-grid-image') as HTMLElement;
-              if (image) {
-                animateImageReveal(image);
-              }
-            }
+      // Aguarda um pouco antes de iniciar para evitar animação no mount
+      setTimeout(() => {
+        isInitialMount = false;
+        
+        mutationObserver = new MutationObserver((mutations) => {
+          // Throttle com requestAnimationFrame para evitar múltiplas execuções
+          if (rafPending) {
+            cancelAnimationFrame(rafPending);
           }
+          
+          rafPending = requestAnimationFrame(() => {
+            mutations.forEach((mutation) => {
+              if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                const target = mutation.target as HTMLElement;
+                if (target.classList.contains('expand-enter-active') || target.classList.contains('expand-enter-to')) {
+                  // Ignora se ainda está no mount inicial
+                  if (isInitialMount) return;
+                  
+                  const image = target.querySelector('.services-animated-grid-image') as HTMLElement;
+                  if (image && image.dataset.animating !== 'true') {
+                    animateImageReveal(image);
+                  }
+                }
+              }
+            });
+            rafPending = null;
+          });
         });
-      });
-      
-      mutationObserver.observe(servicesContainer.value, {
-        attributes: true,
-        attributeFilter: ['class'],
-        subtree: true
-      });
+        
+        mutationObserver.observe(servicesContainer.value, {
+          attributes: true,
+          attributeFilter: ['class'],
+          subtree: true
+        });
+      }, 300);
     } else {
       setTimeout(checkContainer, 100);
     }
@@ -513,6 +544,9 @@ export const initServicesAnimations = (
       observer.disconnect();
       if (mutationObserver) {
         mutationObserver.disconnect();
+      }
+      if (rafPending) {
+        cancelAnimationFrame(rafPending);
       }
     },
     animateTextOnOpen,

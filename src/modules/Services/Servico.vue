@@ -192,7 +192,7 @@
 
       <div class="h-px my-4 md:my-4 bg-[rgb(232,232,232)]"></div>
 
-      <div class="pt-1 pb-6 md:pb-8 xl:pb-6">
+      <div class="">
         <div class="flex flex-col gap-2">
           <div
             class="flex justify-between items-start cursor-pointer py-2"
@@ -209,7 +209,7 @@
           </div>
 
           <Transition name="expand">
-            <div v-show="openService === 4" class="pt-1 md:pt-1">
+            <div v-show="openService === 4" class="pt-2 md:pt-3">
               <div class="flex flex-col items-center md:items-start md:flex-row gap-4 md:gap-6 xl:gap-10">
                 <div class="flex flex-col services-content-text w-full md:flex-1">
                   <p class="satoshi-font text-[0.8rem] md:text-[0.87rem] leading-relaxed text-[#1e1e1e]">
@@ -266,9 +266,7 @@ const servicesContainer = ref<HTMLElement | null>(null);
 const openService = ref<number>(4);
 
 const toggleService = (serviceNumber: number) => {
-  if (openService.value !== serviceNumber) {
-    openService.value = serviceNumber;
-  }
+  openService.value = openService.value === serviceNumber ? 0 : serviceNumber;
 };
 
 let animationController: ReturnType<typeof initServicesAnimations> | null = null;
@@ -288,11 +286,14 @@ watch(openService, () => {
     if (animationController) {
       animationController.animateTextOnOpen();
     }
-    setTimeout(() => {
-      if (window.ScrollTrigger) {
-        window.ScrollTrigger.refresh();
-      }
-    }, 450);
+    // Usa requestAnimationFrame para evitar trava
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        if (window.ScrollTrigger) {
+          window.ScrollTrigger.refresh();
+        }
+      }, 450);
+    });
   });
 });
 </script>

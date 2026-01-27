@@ -397,7 +397,8 @@ export const initServicesAnimations = (
     if (image.dataset.animating === 'true') return;
     image.dataset.animating = 'true';
     
-    requestAnimationFrame(() => {
+    // Pequeno delay para garantir que o elemento está pronto
+    setTimeout(() => {
       const imageWidth = image.offsetWidth;
       const imageHeight = image.offsetHeight;
       if (!imageWidth || !imageHeight) {
@@ -412,10 +413,13 @@ export const initServicesAnimations = (
       const isMobile = window.innerWidth <= 768;
       const duration = isMobile ? 0.9 : 1.3;
       
+      // Força o estado inicial
       gsap.set(image, {
-        clipPath: `polygon(0 0, ${imageWidth}px 0, ${imageWidth}px 0, 0 0)`
+        clipPath: `polygon(0 0, ${imageWidth}px 0, ${imageWidth}px 0, 0 0)`,
+        immediateRender: true
       });
       
+      // Força reflow
       void image.offsetWidth;
       
       gsap.to(image, {
@@ -427,7 +431,7 @@ export const initServicesAnimations = (
           image.dataset.animating = '';
         }
       });
-    });
+    }, 50);
   };
 
   const animateVisibleTexts = () => {
@@ -511,6 +515,17 @@ export const initServicesAnimations = (
             mutations.forEach((mutation) => {
               if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
                 const target = mutation.target as HTMLElement;
+                
+                // Quando está saindo, reseta a flag de animação
+                if (target.classList.contains('expand-leave-active') || target.classList.contains('expand-leave-from')) {
+                  const image = target.querySelector('.services-animated-grid-image') as HTMLElement;
+                  if (image) {
+                    image.dataset.animating = '';
+                    gsap.killTweensOf(image);
+                  }
+                }
+                
+                // Quando está entrando, anima
                 if (target.classList.contains('expand-enter-active') || target.classList.contains('expand-enter-to')) {
                   // Ignora se ainda está no mount inicial
                   if (isInitialMount) return;

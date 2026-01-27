@@ -266,7 +266,9 @@ const servicesContainer = ref<HTMLElement | null>(null);
 const openService = ref<number>(4);
 
 const toggleService = (serviceNumber: number) => {
-  openService.value = openService.value === serviceNumber ? 0 : serviceNumber;
+  if (openService.value !== serviceNumber) {
+    openService.value = serviceNumber;
+  }
 };
 
 let animationController: ReturnType<typeof initServicesAnimations> | null = null;

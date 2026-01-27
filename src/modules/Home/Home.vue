@@ -14,22 +14,14 @@
       </ul>
     </div>
     <button
+      v-if="!isMenuOpen"
       @click="toggleMenu"
       class="md:hidden z-[70] relative w-8 h-8 flex flex-col justify-center gap-1.5"
       aria-label="Menu"
     >
-      <span
-        class="block w-full h-0.5 bg-black transition-all duration-300"
-        :class="isMenuOpen ? 'rotate-45 translate-y-2 bg-white' : ''"
-      ></span>
-      <span
-        class="block w-full h-0.5 bg-black transition-all duration-300"
-        :class="isMenuOpen ? 'opacity-0 bg-white' : ''"
-      ></span>
-      <span
-        class="block w-full h-0.5 bg-black transition-all duration-300"
-        :class="isMenuOpen ? '-rotate-45 -translate-y-2 bg-white' : ''"
-      ></span>
+      <span class="block w-full h-0.5 bg-black transition-all duration-300"></span>
+      <span class="block w-full h-0.5 bg-black transition-all duration-300"></span>
+      <span class="block w-full h-0.5 bg-black transition-all duration-300"></span>
     </button>
   </div>
 
@@ -75,6 +67,16 @@
         class="absolute top-0 left-0 w-full h-full bg-black/90 z-[60] flex items-center justify-center transition-all duration-300"
         :class="isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'"
       >
+        <button
+          v-if="isMenuOpen"
+          @click="toggleMenu"
+          class="md:hidden absolute top-4 right-4 sm:top-4 sm:right-5 md:top-4 md:right-10 w-8 h-8 flex flex-col justify-center gap-1.5 z-[70]"
+          aria-label="Fechar Menu"
+        >
+          <span class="block w-full h-0.5 bg-white transition-all duration-300 rotate-45 translate-y-2"></span>
+          <span class="block w-full h-0.5 bg-white transition-all duration-300 opacity-0"></span>
+          <span class="block w-full h-0.5 bg-white transition-all duration-300 -rotate-45 -translate-y-2"></span>
+        </button>
         <ul class="flex flex-col gap-8 text-white text-2xl">
           <li @click="closeMenu" class="cursor-pointer hover:opacity-70 transition">About</li>
           <li @click="closeMenu" class="cursor-pointer hover:opacity-70 transition">Services</li>
@@ -93,7 +95,6 @@ import { ref, onMounted, nextTick } from "vue";
 import { useGSAP } from "../../composables/useGSAP";
 import { homeAnimationsCSS, initOverlayAnimation, injectHomeAnimationsCSS, animateLetters } from "../../composables/useAnimations";
 
-// Injeta o CSS imediatamente para que as animações funcionem na renderização
 injectHomeAnimationsCSS();
 
 const { useAutoCleanup, initHomeAnimations, gsap } = useGSAP();
@@ -123,9 +124,7 @@ initHomeAnimations(
 
 onMounted(() => {
   nextTick(() => {
-    // Inicia a animação do overlay e quando terminar, anima as letras
     initOverlayAnimation(leftOverlay, rightOverlay, gsap, () => {
-      // Callback executado quando o overlay terminar
       animateLetters(titleContainer.value, gsap, 0.2);
     });
   });

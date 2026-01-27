@@ -525,9 +525,9 @@ export const initServicesAnimations = (
                   }
                 }
                 
-                // Quando está entrando, anima
+                
                 if (target.classList.contains('expand-enter-active') || target.classList.contains('expand-enter-to')) {
-                  // Ignora se ainda está no mount inicial
+                
                   if (isInitialMount) return;
                   
                   const image = target.querySelector('.services-animated-grid-image') as HTMLElement;

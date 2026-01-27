@@ -526,11 +526,13 @@ export const initServicesAnimations = (
           });
         });
         
-        mutationObserver.observe(servicesContainer.value, {
-          attributes: true,
-          attributeFilter: ['class'],
-          subtree: true
-        });
+        if (servicesContainer.value) {
+          mutationObserver.observe(servicesContainer.value, {
+            attributes: true,
+            attributeFilter: ['class'],
+            subtree: true
+          });
+        }
       }, 300);
     } else {
       setTimeout(checkContainer, 100);

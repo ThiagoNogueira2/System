@@ -9,7 +9,7 @@
     <div class="relative px-10 pb-40 ">
       <div class="relative project-image-container" ref="imageContainer1">
       <img
-        src="../../assets/images/projeto-2.jpg"
+        src="../../assets/images/projeto-5.jpg"
         alt="project-image"
         class="h-[85vh] w-[1620px] max-w-[1800px] object-cover"
       />
@@ -43,7 +43,7 @@
   <div class="relative px-10 pb-40 flex justify-end">
     <div class="relative project-image-container" ref="imageContainer2">
       <img
-        src="../../assets/images/projeto-3.jpg"
+        src="../../assets/images/projeto-7.jpg"
         alt="project-image"
         class="h-[85vh] w-[1650px] max-w-[1800px] object-cover"
       />
@@ -77,7 +77,7 @@
   <div class="relative px-10 pb-40 ">
     <div class="relative project-image-container" ref="imageContainer3">
       <img
-        src="../../assets/images/projeto-5.jpg"
+        src="../../assets/images/project-3.webp"
         alt="project-image3"
         class="h-[85vh] w-[1650px] max-w-[1800px] object-cover"
       />

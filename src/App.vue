@@ -1,9 +1,9 @@
 <template>
-   <PreLoader />
+   <!-- <PreLoader /> -->
    <Home />
    <About />
-   <!-- <Services />
-   <Projects /> -->
+   <Services />
+   <Projects />
 </template>
 
 <script setup lang="ts">

@@ -53,20 +53,40 @@ export const initOverlayAnimation = (
   rightOverlay: Ref<HTMLElement | null>,
   gsap: any
 ) => {
-  if (gsap && leftOverlay.value && rightOverlay.value) {
-    gsap.to(leftOverlay.value, {
-      x: '-100%',
-      duration: 1.2,
-      ease: 'power2.inOut',
-      delay: 0.2,
+  if (!gsap || !leftOverlay.value || !rightOverlay.value) return;
+  
+  setTimeout(() => {
+    if (!leftOverlay.value || !rightOverlay.value) return;
+    
+    const leftWidth = leftOverlay.value.offsetWidth;
+    const rightWidth = rightOverlay.value.offsetWidth;
+    
+    gsap.killTweensOf([leftOverlay.value, rightOverlay.value]);
+    
+    leftOverlay.value.style.transform = '';
+    rightOverlay.value.style.transform = '';
+    leftOverlay.value.style.transition = 'none';
+    rightOverlay.value.style.transition = 'none';
+    
+    gsap.set([leftOverlay.value, rightOverlay.value], {
+      x: 0,
+      force3D: true
     });
     
-    gsap.to(rightOverlay.value, {
-      x: '100%',
-      duration: 1.2,
+    const tl = gsap.timeline();
+    
+    tl.to(leftOverlay.value, {
+      x: -leftWidth,
+      duration: 2,
       ease: 'power2.inOut',
-      delay: 0.2,
-    });
-  }
+      force3D: true
+    }, 0.5)
+    .to(rightOverlay.value, {
+      x: rightWidth,
+      duration: 2,
+      ease: 'power2.inOut',
+      force3D: true
+    }, 0.5);
+  }, 300);
 };
 

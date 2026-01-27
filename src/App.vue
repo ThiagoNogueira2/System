@@ -1,6 +1,6 @@
 <template>
    <Home />
-   <About />
+   <!-- <About /> -->
    <Services />
    <Projects />
 </template>

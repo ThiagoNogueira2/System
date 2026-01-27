@@ -286,7 +286,6 @@ watch([isOpen1, isOpen2, isOpen3, isOpen4], () => {
     if (animationController) {
       animationController.animateTextOnOpen();
     }
-    // Atualiza ScrollTrigger após transição do accordion
     setTimeout(() => {
       if (window.ScrollTrigger) {
         window.ScrollTrigger.refresh();

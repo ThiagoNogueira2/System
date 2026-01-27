@@ -11,8 +11,15 @@ export const initImageOverlayAnimation = (
       imageOverlay.value.classList.add('project-image-overlay');
     }
     
+    const overlayWidth = imageOverlay.value.offsetWidth;
+    
+    gsap.killTweensOf(imageOverlay.value);
+    imageOverlay.value.style.transform = '';
+    imageOverlay.value.style.transition = 'none';
+    
     gsap.set(imageOverlay.value, {
       x: 0,
+      force3D: true
     });
 
     const scrollTriggerConfig: any = {
@@ -26,9 +33,10 @@ export const initImageOverlayAnimation = (
     };
 
     gsap.to(imageOverlay.value, {
-      x: '100%',
-      duration: 2,
+      x: overlayWidth,
+      duration: 2.2,
       ease: 'power1.inOut',
+      force3D: true,
       scrollTrigger: scrollTriggerConfig,
     });
   }
@@ -45,8 +53,15 @@ export const initImageOverlayAnimationRight = (
       imageOverlay.value.classList.add('project-image-overlay');
     }
     
+    const overlayWidth = imageOverlay.value.offsetWidth;
+    
+    gsap.killTweensOf(imageOverlay.value);
+    imageOverlay.value.style.transform = '';
+    imageOverlay.value.style.transition = 'none';
+    
     gsap.set(imageOverlay.value, {
       x: 0,
+      force3D: true
     });
 
     const scrollTriggerConfig: any = {
@@ -60,9 +75,10 @@ export const initImageOverlayAnimationRight = (
     };
 
     gsap.to(imageOverlay.value, {
-      x: '-100%',
+      x: -overlayWidth,
       duration: 2,
       ease: 'power1.inOut',
+      force3D: true,
       scrollTrigger: scrollTriggerConfig,
     });
   }

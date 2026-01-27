@@ -54,12 +54,10 @@ export const animations = `
 /* Animação da imagem - expande de cima para baixo */
 .expand-enter-active .services-image-wrapper .services-animated-grid-image {
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-  animation: revealDown 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   will-change: clip-path;
 }
 
 .expand-leave-active .services-image-wrapper .services-animated-grid-image {
-  animation: hideUp 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   will-change: clip-path;
 }
 
@@ -140,6 +138,7 @@ export const initServicesAnimations = (
   servicesContainer: Ref<HTMLElement | null>,
   onItemOpen: () => void
 ) => {
+  const gsap = window.gsap;
 
   const styleId = "services-animations";
   if (!document.getElementById(styleId)) {
@@ -148,6 +147,33 @@ export const initServicesAnimations = (
     style.textContent = animations;
     document.head.appendChild(style);
   }
+
+  const animateImageReveal = (image: HTMLElement) => {
+    if (!gsap || !image) return;
+    
+    setTimeout(() => {
+      const imageWidth = image.offsetWidth;
+      const imageHeight = image.offsetHeight;
+      if (!imageWidth || !imageHeight) return;
+
+      gsap.killTweensOf(image);
+      image.style.clipPath = '';
+      image.style.transition = 'none';
+      
+      gsap.set(image, {
+        clipPath: `polygon(0 0, ${imageWidth}px 0, ${imageWidth}px 0, 0 0)`
+      });
+      
+      void image.offsetWidth;
+      
+      gsap.to(image, {
+        clipPath: `polygon(0 0, ${imageWidth}px 0, ${imageWidth}px ${imageHeight}px, 0 ${imageHeight}px)`,
+        duration: 1.3,
+        ease: 'power2.inOut',
+        force3D: true
+      });
+    }, 50);
+  };
 
 
   const animateVisibleTexts = () => {
@@ -169,6 +195,7 @@ export const initServicesAnimations = (
     requestAnimationFrame(() => {
       const container = servicesContainer.value;
       if (!container) return;
+      
       container.querySelectorAll('.services-content-text').forEach((el) => {
         if (el instanceof HTMLElement && container.contains(el)) {
           const expandContainer = el.closest('.expand-enter-to, .expand-enter-active');
@@ -181,7 +208,6 @@ export const initServicesAnimations = (
         }
       });
       
-      // Atualiza ScrollTrigger após mudança no layout
       if (window.ScrollTrigger) {
         setTimeout(() => {
           window.ScrollTrigger.refresh();
@@ -211,18 +237,44 @@ export const initServicesAnimations = (
     }
   );
 
+  let mutationObserver: MutationObserver | null = null;
+
   const checkContainer = () => {
     if (servicesContainer.value) {
       observer.observe(servicesContainer.value);
+      
+      mutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            const target = mutation.target as HTMLElement;
+            if (target.classList.contains('expand-enter-active') || target.classList.contains('expand-enter-to')) {
+              const image = target.querySelector('.services-animated-grid-image') as HTMLElement;
+              if (image) {
+                animateImageReveal(image);
+              }
+            }
+          }
+        });
+      });
+      
+      mutationObserver.observe(servicesContainer.value, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true
+      });
     } else {
       setTimeout(checkContainer, 100);
     }
   };
 
   checkContainer();
+  
   return {
     cleanup: () => {
       observer.disconnect();
+      if (mutationObserver) {
+        mutationObserver.disconnect();
+      }
     },
     animateTextOnOpen,
   };

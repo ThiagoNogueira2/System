@@ -1,5 +1,5 @@
 <template>
-   <!-- <PreLoader /> -->
+   <PreLoader />
    <Home />
    <About />
    <Services />
@@ -14,6 +14,5 @@
     import Projects from './modules/Project/Projeto.vue'
     import { useSmoothScroll } from './composables/useSmoothScroll'
 
-    // Inicializa o scroll suave em toda a aplicação
     useSmoothScroll()
 </script>

@@ -111,9 +111,9 @@
 </template>
 
 <script setup lang="ts">
-import { initImageOverlayAnimation, initImageOverlayAnimationRight } from "./animations";
 import { ref, onMounted } from "vue";
 import { useGSAP } from "../../composables/useGSAP";
+import { initImageOverlayAnimation, initImageOverlayAnimationRight } from "../../composables/useAnimations";
 
 const { gsap, ScrollTrigger, useAutoCleanup } = useGSAP();
 const imageOverlay1 = ref<HTMLElement | null>(null);

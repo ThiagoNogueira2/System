@@ -253,7 +253,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, nextTick } from "vue";
-import { initServicesAnimations } from "./animations";
+import { initServicesAnimations } from "../../composables/useAnimations";
 
 declare global {
   interface Window {

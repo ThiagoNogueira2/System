@@ -44,14 +44,14 @@
 
       <div
         class="absolute top-[15vw] md:top-[10vw] lg:top-[5vw] left-0 right-0 px-[15px] sm:px-5 md:px-10 lg:px-14 mix-blend-overlay"
+        ref="titleContainer"
       >
         <h1 class="font-bold leading-none satoshi-font text-[16vw] sm:text-[15vw] md:text-[12vw] lg:text-[14.5vw] whitespace-nowrap">
 
           <span
             v-for="(letter, index) in 'WOODLAND'.split('')"
             :key="index"
-            class="inline-block opacity-0 letter-animation"
-            :style="{ animationDelay: `${0.6 + index * 0.1}s` }"
+            class="inline-block letter-animation"
           >
             {{ letter === " " ? "\u00A0" : letter }}
           </span>
@@ -89,9 +89,12 @@
 </template>
 
 <script setup lang="ts">
-import { animations, initOverlayAnimation } from "./animations";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { useGSAP } from "../../composables/useGSAP";
+import { homeAnimationsCSS, initOverlayAnimation, injectHomeAnimationsCSS, animateLetters } from "../../composables/useAnimations";
+
+// Injeta o CSS imediatamente para que as animações funcionem na renderização
+injectHomeAnimationsCSS();
 
 const { useAutoCleanup, initHomeAnimations, gsap } = useGSAP();
 
@@ -115,11 +118,17 @@ initHomeAnimations(
   backgroundImage,
   foregroundImage,
   titleContainer,
-  animations
+  homeAnimationsCSS
 );
 
 onMounted(() => {
-  initOverlayAnimation(leftOverlay, rightOverlay, gsap);
+  nextTick(() => {
+    // Inicia a animação do overlay e quando terminar, anima as letras
+    initOverlayAnimation(leftOverlay, rightOverlay, gsap, () => {
+      // Callback executado quando o overlay terminar
+      animateLetters(titleContainer.value, gsap, 0.2);
+    });
+  });
 });
 </script>
 

@@ -40,13 +40,6 @@ export function useGSAP() {
     delay: number = 100
   ) => {
     onMounted(() => {
-      if (!document.getElementById('home-animations')) {
-        const style = document.createElement('style');
-        style.id = 'home-animations';
-        style.textContent = animationsCSS;
-        document.head.appendChild(style);
-      }
-
       setTimeout(() => {
         if (!isAvailable()) {
           console.error('GSAP ou ScrollTrigger não foram carregados corretamente');

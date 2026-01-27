@@ -1,4 +1,68 @@
-export const animations = `
+import type { Ref } from 'vue';
+
+declare global {
+  interface Window {
+    gsap: any;
+    ScrollTrigger: any;
+  }
+}
+
+export const homeAnimationsCSS = `
+.letter-animation {
+}
+
+.left-overlay {
+  transform: translateX(-100%);
+  animation: slideOutLeft 1s ease-in-out forwards;
+  animation-delay: 0.3s;
+}
+
+.right-overlay {
+  transform: translateX(100%);
+  animation: slideOutRight 1s ease-in-out forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slideUpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+`;
+
+export const injectHomeAnimationsCSS = () => {
+  if (!document.getElementById('home-animations')) {
+    const style = document.createElement('style');
+    style.id = 'home-animations';
+    style.textContent = homeAnimationsCSS;
+    document.head.appendChild(style);
+  }
+};
+
+export const servicesAnimationsCSS = `
 .services-animated-grid-image {
   width: 300px;
   height: 100%;
@@ -11,7 +75,6 @@ export const animations = `
   will-change: transform;
 }
 
-/* Animação de expansão do container */
 .expand-enter-active {
   transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               padding-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -46,12 +109,10 @@ export const animations = `
   padding-top: 0;
 }
 
-/* Estado inicial da imagem - sempre começa oculta */
 .expand-enter-from .services-image-wrapper .services-animated-grid-image {
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
 }
 
-/* Animação da imagem - expande de cima para baixo */
 .expand-enter-active .services-image-wrapper .services-animated-grid-image {
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
   will-change: clip-path;
@@ -61,7 +122,6 @@ export const animations = `
   will-change: clip-path;
 }
 
-/* Animação do texto - aparece depois da imagem */
 .services-content-text {
   opacity: 0;
   transform: translateY(20px);
@@ -79,7 +139,6 @@ export const animations = `
   animation: fadeOut 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-/* Quando o texto precisa aparecer (após animação da imagem) */
 .services-content-text.animate-text {
   animation: fadeInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   animation-delay: 0.6s;
@@ -126,13 +185,196 @@ export const animations = `
 }
 `;
 
-import type { Ref } from 'vue';
+export const initOverlayAnimation = (
+  leftOverlay: Ref<HTMLElement | null>,
+  rightOverlay: Ref<HTMLElement | null>,
+  gsap: any,
+  onComplete?: () => void
+): any => {
+  if (!gsap || !leftOverlay.value || !rightOverlay.value) return null;
+  
+  const startAnimation = (): any => {
+    if (!leftOverlay.value || !rightOverlay.value) return gsap.timeline();
+    
+    const leftWidth = leftOverlay.value.offsetWidth;
+    const rightWidth = rightOverlay.value.offsetWidth;
+    
+    gsap.killTweensOf([leftOverlay.value, rightOverlay.value]);
+    
+    leftOverlay.value.style.transform = '';
+    rightOverlay.value.style.transform = '';
+    leftOverlay.value.style.transition = 'none';
+    rightOverlay.value.style.transition = 'none';
+    
+    gsap.set([leftOverlay.value, rightOverlay.value], {
+      x: 0,
+      force3D: true
+    });
+    
+    const tl = gsap.timeline({
+      onComplete: () => {
+        if (onComplete) {
+          onComplete();
+        }
+      }
+    });
+    
+    tl.to(leftOverlay.value, {
+      x: -leftWidth,
+      duration: 2,
+      ease: 'power2.inOut',
+      force3D: true
+    }, 0.5)
+    .to(rightOverlay.value, {
+      x: rightWidth,
+      duration: 2,
+      ease: 'power2.inOut',
+      force3D: true
+    }, 0.5);
 
-declare global {
-  interface Window {
-    ScrollTrigger: any;
+    return tl;
+  };
+
+  let timeline: any = null;
+
+  if (document.body.classList.contains('preloader-active')) {
+    const checkPreloader = setInterval(() => {
+      if (!document.body.classList.contains('preloader-active')) {
+        clearInterval(checkPreloader);
+        setTimeout(() => {
+          timeline = startAnimation();
+        }, 100);
+      }
+    }, 50);
+  } else {
+    setTimeout(() => {
+      timeline = startAnimation();
+    }, 300);
   }
-}
+
+  return timeline;
+};
+
+export const animateLetters = (
+  titleContainer: HTMLElement | null,
+  gsap: any,
+  delayAfterOverlay: number = 0.2
+) => {
+  if (!gsap || !titleContainer) return;
+
+  const letters = titleContainer.querySelectorAll('.letter-animation');
+  if (letters.length === 0) return;
+
+  letters.forEach((letter) => {
+    if (letter instanceof HTMLElement) {
+      gsap.set(letter, {
+        opacity: 0,
+        y: 50,
+        force3D: true
+      });
+    }
+  });
+
+  const lettersTimeline = gsap.timeline({
+    delay: delayAfterOverlay
+  });
+
+  letters.forEach((letter, index) => {
+    if (letter instanceof HTMLElement) {
+      lettersTimeline.to(letter, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        force3D: true
+      }, index * 0.1);
+    }
+  });
+};
+
+export const initImageOverlayAnimation = (
+  imageOverlay: Ref<HTMLElement | null>,
+  imageContainer: Ref<HTMLElement | null>,
+  gsap: any,
+  ScrollTrigger: any
+) => {
+  if (gsap && ScrollTrigger && imageOverlay.value && imageContainer.value) {
+    if (!imageOverlay.value.classList.contains('project-image-overlay')) {
+      imageOverlay.value.classList.add('project-image-overlay');
+    }
+    
+    const overlayWidth = imageOverlay.value.offsetWidth;
+    
+    gsap.killTweensOf(imageOverlay.value);
+    imageOverlay.value.style.transform = '';
+    imageOverlay.value.style.transition = 'none';
+    
+    gsap.set(imageOverlay.value, {
+      x: 0,
+      force3D: true
+    });
+
+    const scrollTriggerConfig: any = {
+      trigger: imageContainer.value,
+      start: 'top 80%',
+      end: 'top 50%',
+      toggleActions: 'play none none none',
+      once: true,
+      invalidateOnRefresh: false,
+      id: `project-overlay-${Math.random().toString(36).substr(2, 9)}`,
+    };
+
+    gsap.to(imageOverlay.value, {
+      x: overlayWidth,
+      duration: 2.2,
+      ease: 'power1.inOut',
+      force3D: true,
+      scrollTrigger: scrollTriggerConfig,
+    });
+  }
+};
+
+export const initImageOverlayAnimationRight = (
+  imageOverlay: Ref<HTMLElement | null>,
+  imageContainer: Ref<HTMLElement | null>,
+  gsap: any,
+  ScrollTrigger: any
+) => {
+  if (gsap && ScrollTrigger && imageOverlay.value && imageContainer.value) {
+    if (!imageOverlay.value.classList.contains('project-image-overlay')) {
+      imageOverlay.value.classList.add('project-image-overlay');
+    }
+    
+    const overlayWidth = imageOverlay.value.offsetWidth;
+    
+    gsap.killTweensOf(imageOverlay.value);
+    imageOverlay.value.style.transform = '';
+    imageOverlay.value.style.transition = 'none';
+    
+    gsap.set(imageOverlay.value, {
+      x: 0,
+      force3D: true
+    });
+
+    const scrollTriggerConfig: any = {
+      trigger: imageContainer.value,
+      start: 'top 80%',
+      end: 'top 50%',
+      toggleActions: 'play none none none',
+      once: true,
+      invalidateOnRefresh: false,
+      id: `project-overlay-right-${Math.random().toString(36).substr(2, 9)}`,
+    };
+
+    gsap.to(imageOverlay.value, {
+      x: -overlayWidth,
+      duration: 2,
+      ease: 'power1.inOut',
+      force3D: true,
+      scrollTrigger: scrollTriggerConfig,
+    });
+  }
+};
 
 export const initServicesAnimations = (
   servicesContainer: Ref<HTMLElement | null>,
@@ -144,7 +386,7 @@ export const initServicesAnimations = (
   if (!document.getElementById(styleId)) {
     const style = document.createElement("style");
     style.id = styleId;
-    style.textContent = animations;
+    style.textContent = servicesAnimationsCSS;
     document.head.appendChild(style);
   }
 
@@ -175,7 +417,6 @@ export const initServicesAnimations = (
     }, 50);
   };
 
-
   const animateVisibleTexts = () => {
     if (!servicesContainer.value) return;
     const container = servicesContainer.value;
@@ -188,7 +429,6 @@ export const initServicesAnimations = (
       }
     });
   };
-
 
   const animateTextOnOpen = () => {
     if (!servicesContainer.value) return;
@@ -217,7 +457,6 @@ export const initServicesAnimations = (
   };
 
   let hasAnimated = false;
-
 
   const observer = new IntersectionObserver(
     (entries) => {

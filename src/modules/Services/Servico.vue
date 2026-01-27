@@ -1,7 +1,7 @@
 <template>
-  <div id="services-module-container" ref="servicesContainer" class="services-module-wrapper flex flex-col xl:flex-row w-full min-h-screen pt-20 md:pt-32 xl:pt-60">
+  <div id="services-module-container" ref="servicesContainer" class="services-module-wrapper flex flex-col xl:flex-row w-full min-h-screen pt-6 lg:pt-32 xl:pt-60">
     <div class="flex-[0_0_100%] xl:flex-[0_0_50%] p-4 md:p-6 xl:p-10 pt-6 md:pt-8 xl:pt-[60px]">
-      <h1 class="text-4xl md:text-5xl xl:text-7xl font-bold satoshi-font text-[#1e1e1e]">SERVICES</h1>
+      <h1 class="text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-bold satoshi-font text-[#1e1e1e]">SERVICES</h1>
       <div class="mt-4 md:mt-6 aspect-[4/3] max-w-full">
         <img
           src="../../assets/images/service2.jpeg"

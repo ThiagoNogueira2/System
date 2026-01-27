@@ -1,7 +1,7 @@
 <template>
    <PreLoader />
    <Home />
-   <!-- <About /> -->
+   <About />
    <!-- <Services />
    <Projects /> -->
 </template>

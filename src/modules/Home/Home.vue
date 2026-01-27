@@ -1,9 +1,9 @@
 <template>
-  <div class="container1 flex justify-between items-center md:items-start">
+  <div class="container1 flex !items-center justify-between md:items-start">
     <div class="logo-tipo">
       <img src="@/assets/images/logo.svg" alt="logo-tipo" />
     </div>
-    <div class="hidden md:flex items-center">
+    <div class="hidden md:flex ">
       <ul class="flex gap-6">
         <li>About</li>
         <li>Services</li>

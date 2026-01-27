@@ -33,8 +33,8 @@
     </button>
   </div>
 
-  <div class="hero-container">
-    <div class="relative min-h-[85vh] mb-10">
+  <div class="px-0 md:px-10 pt-[15px]">
+    <div class="relative min-h-[75vh] md:min-h-[85vh] mb-10">
       <div
         class="absolute w-full h-full bg-cover bg-center bg-fixed"
         style="
@@ -43,9 +43,9 @@
       ></div>
 
       <div
-        class="absolute px-10 lg:px-14 md:px-5 page-title-position mix-blend-overlay"
+        class="absolute top-[15vw] md:top-[10vw] lg:top-[5vw] left-0 right-0 px-[15px] sm:px-5 md:px-10 lg:px-14 mix-blend-overlay"
       >
-        <h1 class="font-bold leading-none satoshi-font large-title-size whitespace-nowrap">
+        <h1 class="font-bold leading-none satoshi-font text-[16vw] sm:text-[15vw] md:text-[12vw] lg:text-[14.5vw] whitespace-nowrap">
 
           <span
             v-for="(letter, index) in 'WOODLAND'.split('')"
@@ -60,7 +60,7 @@
       </div>
 
       <div
-        class="absolute inset-0 bg-no-repeat bg-fixed bg-[position:50%_0%]"
+        class="absolute inset-0 bg-no-repeat bg-fixed bg-[position:45%_25%] md:bg-[position:50%_0%]"
         style="
           background-image: url('https://cdn.prod.website-files.com/69737a57e219ee8afab8550b/69737a5ae219ee8afab85623_hero-fg.webp');
         "
@@ -123,69 +123,4 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-.page-title-position {
-  top: 5vw;
-  right: 0%;
-  bottom: auto;
-  left: 0%;
-}
-
-@media screen and (max-width: 991px) {
-  .page-title-position {
-    top: 10vw;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .page-title-position {
-    top: 15vw;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-
-.satoshi-font {
-  font-family: "Satoshi", sans-serif;
-}
-
-.large-title-size {
-  font-size: 14.5vw;
-}
-
-@media screen and (max-width: 991px) {
-  .large-title-size {
-    font-size: 12vw;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .large-title-size {
-    font-size: 15vw;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .large-title-size {
-    font-size: 16vw;
-  }
-  
-  .page-title-position {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-
-.hero-container {
-  padding-right: 40px;
-  padding-left: 40px;
-  padding-top: 15px;
-}
-
-@media (max-width: 767px) {
-  .hero-container {
-    padding: 0;
-  }
-}
-</style>
 

@@ -55,7 +55,7 @@ export const initOverlayAnimation = (
 ) => {
   if (!gsap || !leftOverlay.value || !rightOverlay.value) return;
   
-  setTimeout(() => {
+  const startAnimation = () => {
     if (!leftOverlay.value || !rightOverlay.value) return;
     
     const leftWidth = leftOverlay.value.offsetWidth;
@@ -87,6 +87,24 @@ export const initOverlayAnimation = (
       ease: 'power2.inOut',
       force3D: true
     }, 0.5);
-  }, 300);
+  };
+
+  // Verifica se o pré-loader ainda está ativo
+  if (document.body.classList.contains('preloader-active')) {
+    // Aguarda o pré-loader terminar
+    const checkPreloader = setInterval(() => {
+      if (!document.body.classList.contains('preloader-active')) {
+        clearInterval(checkPreloader);
+        setTimeout(() => {
+          startAnimation();
+        }, 100);
+      }
+    }, 50);
+  } else {
+    // Pré-loader já terminou, inicia imediatamente
+    setTimeout(() => {
+      startAnimation();
+    }, 300);
+  }
 };
 

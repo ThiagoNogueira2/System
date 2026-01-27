@@ -1,11 +1,13 @@
 <template>
+   <PreLoader />
    <Home />
    <!-- <About /> -->
-   <Services />
-   <Projects />
+   <!-- <Services />
+   <Projects /> -->
 </template>
 
 <script setup lang="ts">
+    import PreLoader from './components/PreLoader.vue'
     import Home from './modules/Home/Home.vue'
     import About from './modules/About/Sobre.vue'
     import Services from './modules/Services/Servico.vue'

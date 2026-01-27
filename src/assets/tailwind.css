@@ -66,3 +66,13 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.3);
 }
+
+@layer utilities {
+  .satoshi-font {
+    font-family: "Satoshi", sans-serif;
+  }
+}
+
+body.preloader-active {
+  overflow: hidden;
+}

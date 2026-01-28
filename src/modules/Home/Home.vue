@@ -53,7 +53,7 @@
 
       <div
         ref="foregroundImage"
-        class="absolute inset-0 bg-no-repeat md:bg-fixed bg-[position:50%_50%] md:bg-[position:45%_25%] lg:bg-[position:50%_0%]"
+        class="absolute inset-0 bg-no-repeat max-[767px]:bg-cover md:bg-fixed bg-[position:50%_50%] md:bg-[position:45%_25%] lg:bg-[position:50%_0%]"
         style="
           background-image: url('https://cdn.prod.website-files.com/69737a57e219ee8afab8550b/69737a5ae219ee8afab85623_hero-fg.webp');
         "
@@ -127,7 +127,6 @@ onMounted(() => {
       animateLetters(titleContainer.value, gsap, 0.2);
     });
 
-    // Animação parallax para mobile (simula o efeito bg-fixed)
     if (gsap && ScrollTrigger && foregroundImage.value) {
       const isMobile = window.innerWidth < 768;
       if (isMobile) {

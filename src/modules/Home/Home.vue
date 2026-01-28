@@ -52,7 +52,8 @@
       </div>
 
       <div
-        class="absolute inset-0 bg-no-repeat md:bg-fixed bg-[position:50%_100%] md:bg-[position:45%_25%] lg:bg-[position:50%_0%]"
+        ref="foregroundImage"
+        class="absolute inset-0 bg-no-repeat md:bg-fixed bg-[position:50%_50%] md:bg-[position:45%_25%] lg:bg-[position:50%_0%]"
         style="
           background-image: url('https://cdn.prod.website-files.com/69737a57e219ee8afab8550b/69737a5ae219ee8afab85623_hero-fg.webp');
         "
@@ -95,7 +96,7 @@ import { homeAnimationsCSS, initOverlayAnimation, injectHomeAnimationsCSS, anima
 
 injectHomeAnimationsCSS();
 
-const { useAutoCleanup, initHomeAnimations, gsap } = useGSAP();
+const { useAutoCleanup, initHomeAnimations, gsap, ScrollTrigger } = useGSAP();
 
 const backgroundImage = ref<HTMLElement | null>(null);
 const foregroundImage = ref<HTMLElement | null>(null);
@@ -125,6 +126,25 @@ onMounted(() => {
     initOverlayAnimation(leftOverlay, rightOverlay, gsap, () => {
       animateLetters(titleContainer.value, gsap, 0.2);
     });
+
+    // Animação parallax para mobile (simula o efeito bg-fixed)
+    if (gsap && ScrollTrigger && foregroundImage.value) {
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) {
+        const container = foregroundImage.value.parentElement;
+        if (container) {
+          gsap.to(foregroundImage.value, {
+            backgroundPosition: '50% 100%',
+            scrollTrigger: {
+              trigger: container,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: true,
+            },
+          });
+        }
+      }
+    }
   });
 });
 </script>

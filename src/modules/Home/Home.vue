@@ -4,6 +4,7 @@
       <img src="@/assets/images/logo.svg" alt="logo-tipo" />
     </div>
     <div class="hidden md:flex ">
+      
       <ul class="flex gap-6">
         <li>About</li>
         <li>Services</li>

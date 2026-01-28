@@ -1,5 +1,5 @@
 <template>
-   <PreLoader />
+   <!-- <PreLoader /> -->
    <Home />
    <About />
    <Services />

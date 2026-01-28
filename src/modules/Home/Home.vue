@@ -35,7 +35,7 @@
       ></div>
 
       <div
-        class="absolute top-[15vw] md:top-[10vw] lg:top-[5vw] left-0 right-0 px-[15px] sm:px-5 md:px-10 lg:px-14 mix-blend-overlay"
+        class="absolute top-[15vw] md:top-[10vw] lg:top-[5vw] left-0 right-0 px-[10px] sm:px-5 md:px-10 lg:px-14 mix-blend-overlay"
         ref="titleContainer"
       >
         <h1 class="font-bold leading-none satoshi-font text-[16vw] sm:text-[15vw] md:text-[12vw] lg:text-[14.5vw] whitespace-nowrap">

@@ -28,7 +28,7 @@
   <div class="px-0 md:px-10 pt-[15px]">
     <div class="relative min-h-[75vh] md:min-h-[85vh] mb-10">
       <div
-        class="absolute w-full h-full bg-cover bg-center bg-fixed"
+        class="absolute w-full h-full bg-cover bg-[position:50%_80%] md:bg-center bg-fixed"
         style="
           background-image: url('https://cdn.prod.website-files.com/69737a57e219ee8afab8550b/69737a5ae219ee8afab8561f_hero-bg-sky.webp');
         "
@@ -52,7 +52,7 @@
       </div>
 
       <div
-        class="absolute inset-0 bg-no-repeat bg-fixed bg-[position:45%_25%] md:bg-[position:50%_0%]"
+        class="absolute inset-0 bg-no-repeat bg-fixed bg-[position:50%_80%] md:bg-[position:45%_25%] lg:bg-[position:50%_0%]"
         style="
           background-image: url('https://cdn.prod.website-files.com/69737a57e219ee8afab8550b/69737a5ae219ee8afab85623_hero-fg.webp');
         "

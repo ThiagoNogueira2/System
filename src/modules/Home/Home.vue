@@ -4,7 +4,6 @@
       <img src="@/assets/images/logo.svg" alt="logo-tipo" />
     </div>
     <div class="hidden md:flex ">
-      
       <ul class="flex gap-6">
         <li>About</li>
         <li>Services</li>
@@ -20,16 +19,16 @@
       class="md:hidden z-[70] relative w-8 h-8 flex flex-col justify-center gap-1.5"
       aria-label="Menu"
     >
-      <span class="block w-full h-0.5 bg-black transition-all duration-300"></span>
-      <span class="block w-full h-0.5 bg-black transition-all duration-300"></span>
-      <span class="block w-full h-0.5 bg-black transition-all duration-300"></span>
+      <span class="block w-full h-0.5 bg-black"></span>
+      <span class="block w-full h-0.5 bg-black"></span>
+      <span class="block w-full h-0.5 bg-black"></span>
     </button>
   </div>
 
   <div class="px-0 md:px-10 pt-[15px]">
     <div class="relative min-h-[75vh] md:min-h-[85vh] mb-10">
       <div
-        class="absolute w-full h-full bg-cover bg-center bg-no-repeat"
+        class="absolute w-full h-full bg-cover bg-center bg-fixed"
         style="
           background-image: url('https://cdn.prod.website-files.com/69737a57e219ee8afab8550b/69737a5ae219ee8afab8561f_hero-bg-sky.webp');
         "
@@ -53,7 +52,7 @@
       </div>
 
       <div
-        class="absolute inset-0 bg-no-repeat bg-[position:45%_25%] md:bg-[position:50%_50%]"
+        class="absolute inset-0 bg-no-repeat bg-fixed bg-[position:45%_25%] md:bg-[position:50%_0%]"
         style="
           background-image: url('https://cdn.prod.website-files.com/69737a57e219ee8afab8550b/69737a5ae219ee8afab85623_hero-fg.webp');
         "
@@ -70,13 +69,11 @@
       >
         <button
           v-if="isMenuOpen"
-          @click="toggleMenu"
-          class="md:hidden absolute top-4 right-4 sm:top-4 sm:right-5 md:top-4 md:right-10 w-8 h-8 flex flex-col justify-center gap-1.5 z-[70]"
-          aria-label="Fechar Menu"
+          @click="closeMenu"
+          class="absolute top-4 right-4 text-white text-5xl font-normal"
+          aria-label="Fechar menu"
         >
-          <span class="block w-full h-0.5 bg-white transition-all duration-300 rotate-45 translate-y-2"></span>
-          <span class="block w-full h-0.5 bg-white transition-all duration-300 opacity-0"></span>
-          <span class="block w-full h-0.5 bg-white transition-all duration-300 -rotate-45 -translate-y-2"></span>
+          ×
         </button>
         <ul class="flex flex-col gap-8 text-white text-2xl">
           <li @click="closeMenu" class="cursor-pointer hover:opacity-70 transition">About</li>
@@ -131,5 +128,3 @@ onMounted(() => {
   });
 });
 </script>
-
-

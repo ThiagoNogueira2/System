@@ -52,7 +52,7 @@
       </div>
 
       <div
-        class="absolute inset-0 bg-no-repeat bg-fixed bg-[position:45%_60%] md:bg-[position:45%_25%] lg:bg-[position:50%_0%]"
+        class="absolute inset-0 bg-no-repeat bg-fixed bg-[position:50%_100%] md:bg-[position:45%_25%] lg:bg-[position:50%_0%]"
         style="
           background-image: url('https://cdn.prod.website-files.com/69737a57e219ee8afab8550b/69737a5ae219ee8afab85623_hero-fg.webp');
         "

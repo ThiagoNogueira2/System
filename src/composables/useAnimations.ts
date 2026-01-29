@@ -393,11 +393,11 @@ export const initServicesAnimations = (
   const animateImageReveal = (image: HTMLElement) => {
     if (!gsap || !image) return;
     
-    // Evita animação duplicada
+ 
     if (image.dataset.animating === 'true') return;
     image.dataset.animating = 'true';
     
-    // Pequeno delay para garantir que o elemento está pronto
+  
     setTimeout(() => {
       const imageWidth = image.offsetWidth;
       const imageHeight = image.offsetHeight;
@@ -413,13 +413,12 @@ export const initServicesAnimations = (
       const isMobile = window.innerWidth <= 768;
       const duration = isMobile ? 0.9 : 1.3;
       
-      // Força o estado inicial
+    
       gsap.set(image, {
         clipPath: `polygon(0 0, ${imageWidth}px 0, ${imageWidth}px 0, 0 0)`,
         immediateRender: true
       });
       
-      // Força reflow
       void image.offsetWidth;
       
       gsap.to(image, {
@@ -501,12 +500,12 @@ export const initServicesAnimations = (
     if (servicesContainer.value) {
       observer.observe(servicesContainer.value);
       
-      // Aguarda um pouco antes de iniciar para evitar animação no mount
+      
       setTimeout(() => {
         isInitialMount = false;
         
         mutationObserver = new MutationObserver((mutations) => {
-          // Throttle com requestAnimationFrame para evitar múltiplas execuções
+        
           if (rafPending) {
             cancelAnimationFrame(rafPending);
           }
@@ -516,7 +515,7 @@ export const initServicesAnimations = (
               if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
                 const target = mutation.target as HTMLElement;
                 
-                // Quando está saindo, reseta a flag de animação
+               
                 if (target.classList.contains('expand-leave-active') || target.classList.contains('expand-leave-from')) {
                   const image = target.querySelector('.services-animated-grid-image') as HTMLElement;
                   if (image) {

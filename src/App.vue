@@ -3,7 +3,7 @@
    <Home />
    <About />
    <Services />
-   <!-- <Projects /> -->
+   <Projects />
 </template>
 
 <script setup lang="ts">

@@ -4,6 +4,7 @@
    <About />
    <Services />
    <Projects />
+   <Information />
 </template>
 
 <script setup lang="ts">
@@ -11,6 +12,7 @@
     import Home from './modules/Home/Home.vue'
     import About from './modules/About/Sobre.vue'
     import Services from './modules/Services/Servico.vue'
+    import Information from './modules/information/Informacao.vue'
     import Projects from './modules/Project/Projeto.vue'
     import { useSmoothScroll } from './composables/useSmoothScroll'
 

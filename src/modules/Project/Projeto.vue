@@ -29,10 +29,7 @@
 
       <div
         class="mt-6 xl:mt-0 xl:absolute xl:top-[30%] xl:right-[2.2%] z-[5] max-w-full xl:max-w-[20vw] xl:w-fit xl:shadow-[2px_2px_15px_#0003]"
-        style="
-          backdrop-filter: blur(5px);
-          background-color: #ffffffd9;
-        "
+        style="backdrop-filter: blur(5px); background-color: #ffffffd9"
         :style="{
           padding: isMobile ? '5px' : '30px',
           minWidth: isMobile ? 'auto' : '250px',
@@ -55,7 +52,9 @@
       </div>
     </div>
 
-    <div class="relative px-4 md:px-10 pb-5 pb-5 xl:pb-40 xl:flex xl:justify-end">
+    <div
+      class="relative px-4 md:px-10 pb-5 pb-5 xl:pb-40 xl:flex xl:justify-end"
+    >
       <div
         class="relative project-image-container w-full md:max-w-[85vw] md:max-h-[85vh] overflow-hidden md:h-[610px] xl:h-auto md:ml-auto"
         ref="imageContainer2"
@@ -76,10 +75,7 @@
 
       <div
         class="mt-6 xl:mt-0 xl:absolute xl:top-[30%] xl:left-[2.2%] z-[5] max-w-full xl:max-w-[20vw] xl:w-fit xl:shadow-[2px_2px_15px_#0003]"
-        style="
-          backdrop-filter: blur(5px);
-          background-color: #ffffffd9;
-        "
+        style="backdrop-filter: blur(5px); background-color: #ffffffd9"
         :style="{
           padding: isMobile ? '5px' : '30px',
           minWidth: isMobile ? 'auto' : '250px',
@@ -123,10 +119,7 @@
 
       <div
         class="mt-6 xl:mt-0 xl:absolute xl:top-[30%] xl:right-[2.2%] z-[5] max-w-full xl:max-w-[20vw] xl:w-fit xl:shadow-[2px_2px_15px_#0003]"
-        style="
-          backdrop-filter: blur(5px);
-          background-color: #ffffffd9;
-        "
+        style="backdrop-filter: blur(5px); background-color: #ffffffd9"
         :style="{
           padding: isMobile ? '5px' : '30px',
           minWidth: isMobile ? 'auto' : '250px',

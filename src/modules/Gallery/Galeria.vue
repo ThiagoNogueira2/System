@@ -15,7 +15,7 @@
                 
                 <!-- Imagem 1 -->
                 <div 
-                    class="absolute z-[15] max-lg:w-[39%] lg:w-[33.33%]" 
+                    class="absolute z-[15] max-lg:w-[46%] lg:w-[33.33%]" 
                     :style="{
                         left: '3.78%',
                         top: '-25.57%'
@@ -30,7 +30,7 @@
 
                 <!-- Imagem 2 -->
                 <div 
-                    class="absolute z-[3] max-lg:w-[35%] max-lg:top-[10%] lg:w-[33.33%] lg:top-[-4.29%]" 
+                    class="absolute z-[3] max-lg:w-[44%] max-lg:top-[10%] lg:w-[33.33%] lg:top-[-4.29%]" 
                     :style="{
                         right: '68.22%'
                     }"
@@ -44,7 +44,7 @@
 
                 <!-- Imagem 3 -->
                 <div 
-                    class="absolute z-[10] max-lg:w-[36%] lg:w-[33.33%]" 
+                    class="absolute z-[10] max-lg:w-[45%] lg:w-[33.33%]" 
                     :style="{
                         left: '63.67%',
                         top: '-38.43%'
@@ -59,7 +59,7 @@
 
                 <!-- Imagem 4 -->
                 <div 
-                    class="absolute z-[4] max-lg:w-[37%] max-lg:top-[8%] lg:w-[33.33%] lg:top-[-1.43%]" 
+                    class="absolute z-[4] max-lg:w-[45%] max-lg:top-[8%] lg:w-[33.33%] lg:top-[-1.43%]" 
                     :style="{
                         left: '67.98%'
                     }"
@@ -73,7 +73,7 @@
 
                 <!-- Imagem 5 -->
                 <div 
-                    class="absolute z-[6] max-lg:w-[42%] lg:w-[33.33%]" 
+                    class="absolute z-[6] max-lg:w-[44%] lg:w-[33.33%]" 
                     :style="{
                         left: '33.33%',
                         top: '-28.57%'

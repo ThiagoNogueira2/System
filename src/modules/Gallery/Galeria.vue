@@ -30,7 +30,7 @@
 
                 <!-- Imagem 2 -->
                 <div 
-                    class="absolute z-[3] max-lg:w-[44%] max-lg:top-[10%] lg:w-[33.33%] lg:top-[-4.29%]" 
+                    class="absolute z-[3] max-lg:w-[44%] max-lg:top-[20%] lg:w-[33.33%] lg:top-[-4.29%]" 
                     :style="{
                         right: '68.22%'
                     }"
@@ -59,7 +59,7 @@
 
                 <!-- Imagem 4 -->
                 <div 
-                    class="absolute z-[4] max-lg:w-[45%] max-lg:top-[8%] lg:w-[33.33%] lg:top-[-1.43%]" 
+                    class="absolute z-[4] max-lg:w-[45%] max-lg:top-[17%] lg:w-[33.33%] lg:top-[-1.43%]" 
                     :style="{
                         left: '67.98%'
                     }"

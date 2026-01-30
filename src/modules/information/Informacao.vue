@@ -1,5 +1,5 @@
 <template>
-    <div class="container1 bg-gray-100">
+    <div class="container1 ">
       <h1
         class="satoshi-font font-bold text-[0.87rem] leading-[110%] text-[#1e1e1e] pt-10"
       >
@@ -7,7 +7,7 @@
       </h1>
     </div>
   
-    <div class="info container1 overflow-hidden bg-gray-100">
+    <div class="info container1 overflow-hidden ">
       <div class="flex gap-8 md:gap-12 lg:gap-20 p-8 md:p-12 lg:p-16 animate-scroll-right">
         <div class="flex flex-col">
           <h1
@@ -85,7 +85,7 @@
       </div>
     </div>
   
-    <div class="container1 bg-gray-100 pb-10">
+    <div class="container1  pb-10">
       <h1
         class="satoshi-font flex justify-end font-bold text-[0.87rem] leading-[110%] text-[#1e1e1e]"
       >
@@ -93,7 +93,7 @@
       </h1>
     </div>
   
-    <div class="container1 overflow-hidden pb-20 md:pb-32 lg:pb-40 bg-gray-100">
+    <div class="container1 overflow-hidden pb-20 md:pb-32 lg:pb-40 ">
       <div class="flex justify-end gap-8 md:gap-16 lg:gap-30 animate-scroll-left">
         <img src="../../assets/images/info1.svg" alt="logo-1" class="w-12 md:w-20 lg:w-auto" />
         <img src="../../assets/images/info2.svg" alt="logo-2" class="w-12 md:w-20 lg:w-auto" />

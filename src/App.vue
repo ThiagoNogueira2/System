@@ -7,6 +7,8 @@
    <Information />
    <Gallery />
    <Review />
+   <Partner />
+
 </template>
 
 <script setup lang="ts">
@@ -17,6 +19,7 @@
     import Information from './modules/information/Informacao.vue'
     import Gallery from './modules/Gallery/Galeria.vue'
     import Review from './modules/Review/Visualizacao.vue'
+    import Partner from './modules/Partner/Conosco.vue'
     import Projects from './modules/Project/Projeto.vue'
     import { useSmoothScroll } from './composables/useSmoothScroll'
 

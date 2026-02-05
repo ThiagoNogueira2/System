@@ -1,5 +1,5 @@
 <template>
-    <div class="-mb-[200px] pt-0 pb-60 lg:pt-30">
+    <div class="-mb-[200px] pt-0 pb-75 lg:pt-30">
         <div class="sticky top-[30vh] -z-10 flex flex-col justify-start items-center font-bold">
             <p class="text-sm tracking-normal" style="color: #1e1e1e;">
                 AS FEATURED IN
@@ -30,7 +30,7 @@
 
             
                 <div 
-                    class="absolute z-[7] max-lg:w-[44%] max-lg:top-[80%] lg:w-[33.33%] lg:top-[30.29%] gallery-item" 
+                    class="absolute z-[7] max-lg:w-[35%] max-lg:top-[75%] lg:w-[33.33%] lg:top-[30.29%] gallery-item" 
                     :style="{
                         right: '68.22%'
                     }"
@@ -59,7 +59,7 @@
 
                 
                 <div 
-                    class="absolute z-[8] max-lg:w-[45%] max-lg:top-[80%] lg:w-[33.33%] lg:top-[30.43%] gallery-item" 
+                    class="absolute z-[8] max-lg:w-[35%] max-lg:top-[75%] lg:w-[33.33%] lg:top-[30.43%] gallery-item" 
                     :style="{
                         left: '67.98%'
                     }"

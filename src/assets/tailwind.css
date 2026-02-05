@@ -68,6 +68,12 @@ body {
   .satoshi-font {
     font-family: "Satoshi", sans-serif;
   }
+  
+  @media (min-width: 1200px) {
+    .pt-80-at-1200 {
+      padding-top: 20rem;
+    }
+  }
 }
 
 body.preloader-active {

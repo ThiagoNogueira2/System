@@ -410,8 +410,12 @@ watch(openService, () => {
 
     requestAnimationFrame(() => {
       setTimeout(() => {
-        if (window.ScrollTrigger) {
-          window.ScrollTrigger.refresh();
+        try {
+          if (window.ScrollTrigger && typeof window.ScrollTrigger.refresh === 'function') {
+            window.ScrollTrigger.refresh();
+          }
+        } catch (error) {
+          console.warn('Erro ao atualizar ScrollTrigger:', error);
         }
       }, 450);
     });

@@ -466,7 +466,13 @@ export const initServicesAnimations = (
       
       if (window.ScrollTrigger) {
         setTimeout(() => {
-          window.ScrollTrigger.refresh();
+          try {
+            if (typeof window.ScrollTrigger.refresh === 'function') {
+              window.ScrollTrigger.refresh();
+            }
+          } catch (error) {
+            console.warn('Erro ao atualizar ScrollTrigger:', error);
+          }
         }, 500);
       }
     });
@@ -566,6 +572,199 @@ export const initServicesAnimations = (
       }
     },
     animateTextOnOpen,
+  };
+};
+
+export const initGalleryAnimations = (
+  galleryContainer: Ref<HTMLElement | null>,
+  images: Ref<HTMLElement | null>[],
+  gsap: any,
+  ScrollTrigger: any
+) => {
+  if (!gsap || !ScrollTrigger || !galleryContainer.value) return;
+
+  // Detectar se é mobile/tablet
+  const isMobile = window.innerWidth <= 768;
+  const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
+  
+  // Ajustar valores baseado no dispositivo
+  const movementMultiplier = isMobile ? 0.4 : isTablet ? 0.6 : 1;
+  const scrubValue = isMobile ? 1 : 1.5;
+  const durationValue = isMobile ? 1 : 1.5;
+
+  const animateImage = (imageRef: Ref<HTMLElement | null>, delay: number = 0, index: number = 0) => {
+    if (!imageRef.value) return;
+
+    const image = imageRef.value;
+    
+
+    gsap.killTweensOf(image);
+    image.style.transform = '';
+    image.style.transition = 'none';
+    image.style.willChange = 'transform, opacity';
+    
+    gsap.set(image, {
+      scale: 0.3,
+      opacity: 0,
+      transformOrigin: 'center center',
+      force3D: true,
+      immediateRender: true
+    });
+
+   
+    const scrollTriggerConfig: any = {
+      trigger: galleryContainer.value || image,
+      start: isMobile ? 'top 90%' : 'top 85%',
+      toggleActions: 'play none none none',
+      once: true,
+      invalidateOnRefresh: true,
+      markers: false,
+    };
+
+    gsap.to(image, {
+      scale: 1,
+      opacity: 1,
+      duration: durationValue,
+      ease: 'power2.out',
+      force3D: true,
+      scrollTrigger: scrollTriggerConfig,
+      delay: delay,
+    });
+
+ 
+    const scrollMoveConfig: any = {
+      trigger: galleryContainer.value || image,
+      start: isMobile ? 'top 85%' : 'top 80%',
+      end: 'bottom top',
+      scrub: scrubValue,
+      invalidateOnRefresh: true,
+      markers: false,
+    };
+
+  
+    // Valores base de movimento (desktop)
+    const baseMovements = [
+      { x: -90, y: 45 },     
+      { x: -90, y: 45 },     
+      { x: 150, y: -120 },    
+      { x: 120, y: 120 },     
+      { x: 0, y: 0 },         
+    ];
+
+    // Aplicar multiplicador baseado no dispositivo
+    const movements = baseMovements.map(m => ({
+      x: m.x * movementMultiplier,
+      y: m.y * movementMultiplier
+    }));
+
+    const movement = movements[index] || { x: 0, y: 0 };
+
+    if (movement.x !== 0 || movement.y !== 0) {
+      gsap.to(image, {
+        x: movement.x,
+        y: movement.y,
+        ease: 'none',
+        force3D: true,
+        scrollTrigger: scrollMoveConfig,
+      });
+    }
+  };
+
+  const initAnimations = () => {
+    // Verificar se todos os elementos existem antes de animar
+    const allImagesExist = images.every(imgRef => imgRef.value && galleryContainer.value);
+    
+    if (!allImagesExist) {
+      console.warn('Alguns elementos da galeria não estão disponíveis');
+      return;
+    }
+
+    images.forEach((imageRef, index) => {
+      const delays = [0, 0.1, 0.2, 0.15, 0.25];
+      animateImage(imageRef, delays[index] || 0, index);
+    });
+
+    // Usar requestAnimationFrame para garantir que o DOM está pronto
+    requestAnimationFrame(() => {
+      try {
+        if (ScrollTrigger && typeof ScrollTrigger.refresh === 'function') {
+          ScrollTrigger.refresh();
+        }
+      } catch (error) {
+        console.warn('Erro ao atualizar ScrollTrigger:', error);
+      }
+    });
+  };
+
+  setTimeout(() => {
+    initAnimations();
+  }, 300);
+
+  // Atualizar animações ao redimensionar a janela
+  let resizeTimeout: ReturnType<typeof setTimeout>;
+  const handleResize = () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      // Matar todas as animações existentes de forma segura
+      images.forEach((imageRef) => {
+        if (imageRef.value) {
+          gsap.killTweensOf(imageRef.value);
+        }
+      });
+      
+      // Limpar ScrollTriggers de forma segura
+      try {
+        if (ScrollTrigger && typeof ScrollTrigger.getAll === 'function') {
+          const triggers = ScrollTrigger.getAll();
+          triggers.forEach((trigger: any) => {
+            try {
+              if (trigger && typeof trigger.kill === 'function') {
+                trigger.kill();
+              }
+            } catch (e) {
+              // Ignorar erros ao matar triggers individuais
+            }
+          });
+        }
+      } catch (error) {
+        console.warn('Erro ao limpar ScrollTriggers:', error);
+      }
+      
+      // Recriar animações com novos valores
+      initAnimations();
+    }, 250);
+  };
+
+  window.addEventListener('resize', handleResize);
+
+  // Cleanup ao desmontar
+  return () => {
+    window.removeEventListener('resize', handleResize);
+    clearTimeout(resizeTimeout);
+    
+    // Limpar animações e ScrollTriggers de forma segura
+    images.forEach((imageRef) => {
+      if (imageRef.value) {
+        gsap.killTweensOf(imageRef.value);
+      }
+    });
+    
+    try {
+      if (ScrollTrigger && typeof ScrollTrigger.getAll === 'function') {
+        const triggers = ScrollTrigger.getAll();
+        triggers.forEach((trigger: any) => {
+          try {
+            if (trigger && typeof trigger.kill === 'function') {
+              trigger.kill();
+            }
+          } catch (e) {
+            // Ignorar erros ao matar triggers individuais
+          }
+        });
+      }
+    } catch (error) {
+      console.warn('Erro ao limpar ScrollTriggers no cleanup:', error);
+    }
   };
 };
 

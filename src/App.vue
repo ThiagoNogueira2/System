@@ -6,6 +6,7 @@
    <Projects />
    <Information />
    <Gallery />
+   <Review />
 </template>
 
 <script setup lang="ts">
@@ -15,6 +16,7 @@
     import Services from './modules/Services/Servico.vue'
     import Information from './modules/information/Informacao.vue'
     import Gallery from './modules/Gallery/Galeria.vue'
+    import Review from './modules/Review/Visualizacao.vue'
     import Projects from './modules/Project/Projeto.vue'
     import { useSmoothScroll } from './composables/useSmoothScroll'
 

@@ -16,7 +16,7 @@
         <img
           src="../../assets/images/projeto-5.jpg"
           alt="project-image"
-          class="w-full h-auto md:h-full xl:h-auto object-cover"
+          class="w-full h-auto md:h-full xl:h-auto object-cover max-md:block"
         />
 
         <div class="absolute inset-0 z-[4] overflow-hidden">
@@ -62,7 +62,7 @@
         <img
           src="../../assets/images/projeto-7.jpg"
           alt="project-image"
-          class="w-full h-auto md:h-full xl:h-auto object-cover"
+          class="w-full h-auto md:h-full xl:h-auto object-cover max-md:block"
         />
 
         <div class="absolute inset-0 z-[4] overflow-hidden">
@@ -106,7 +106,7 @@
         <img
           src="../../assets/images/project-3.webp"
           alt="project-image3"
-          class="w-full h-auto md:h-full xl:h-auto object-cover"
+          class="w-full h-auto md:h-full xl:h-auto object-cover max-md:block"
         />
 
         <div class="absolute inset-0 z-[4] overflow-hidden">

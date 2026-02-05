@@ -298,40 +298,42 @@ export const initImageOverlayAnimation = (
   gsap: any,
   ScrollTrigger: any
 ) => {
-  if (gsap && ScrollTrigger && imageOverlay.value && imageContainer.value) {
-    if (!imageOverlay.value.classList.contains('project-image-overlay')) {
-      imageOverlay.value.classList.add('project-image-overlay');
-    }
-    
-    const overlayWidth = imageOverlay.value.offsetWidth;
-    
-    gsap.killTweensOf(imageOverlay.value);
-    imageOverlay.value.style.transform = '';
-    imageOverlay.value.style.transition = 'none';
-    
-    gsap.set(imageOverlay.value, {
-      x: 0,
-      force3D: true
-    });
-
-    const scrollTriggerConfig: any = {
-      trigger: imageContainer.value,
-      start: 'top 80%',
-      end: 'top 50%',
-      toggleActions: 'play none none none',
-      once: true,
-      invalidateOnRefresh: false,
-      id: `project-overlay-${Math.random().toString(36).substr(2, 9)}`,
-    };
-
-    gsap.to(imageOverlay.value, {
-      x: overlayWidth,
-      duration: 2.2,
-      ease: 'power1.inOut',
-      force3D: true,
-      scrollTrigger: scrollTriggerConfig,
-    });
+  if (!gsap || !ScrollTrigger || !imageOverlay.value || !imageContainer.value) return;
+  
+  const isMobile = window.innerWidth <= 768;
+  
+  if (!imageOverlay.value.classList.contains('project-image-overlay')) {
+    imageOverlay.value.classList.add('project-image-overlay');
   }
+  
+  const overlayWidth = imageOverlay.value.offsetWidth;
+  
+  gsap.killTweensOf(imageOverlay.value);
+  imageOverlay.value.style.transform = '';
+  imageOverlay.value.style.transition = 'none';
+  
+  gsap.set(imageOverlay.value, {
+    x: 0,
+    force3D: true
+  });
+
+  const scrollTriggerConfig: any = {
+    trigger: imageContainer.value,
+    start: isMobile ? 'top 90%' : 'top 80%',
+    end: 'top 50%',
+    toggleActions: 'play none none none',
+    once: true,
+    invalidateOnRefresh: true,
+    id: `project-overlay-${Math.random().toString(36).substr(2, 9)}`,
+  };
+
+  gsap.to(imageOverlay.value, {
+    x: overlayWidth,
+    duration: isMobile ? 1.5 : 2.2,
+    ease: 'power1.inOut',
+    force3D: true,
+    scrollTrigger: scrollTriggerConfig,
+  });
 };
 
 export const initImageOverlayAnimationRight = (
@@ -340,40 +342,42 @@ export const initImageOverlayAnimationRight = (
   gsap: any,
   ScrollTrigger: any
 ) => {
-  if (gsap && ScrollTrigger && imageOverlay.value && imageContainer.value) {
-    if (!imageOverlay.value.classList.contains('project-image-overlay')) {
-      imageOverlay.value.classList.add('project-image-overlay');
-    }
-    
-    const overlayWidth = imageOverlay.value.offsetWidth;
-    
-    gsap.killTweensOf(imageOverlay.value);
-    imageOverlay.value.style.transform = '';
-    imageOverlay.value.style.transition = 'none';
-    
-    gsap.set(imageOverlay.value, {
-      x: 0,
-      force3D: true
-    });
-
-    const scrollTriggerConfig: any = {
-      trigger: imageContainer.value,
-      start: 'top 80%',
-      end: 'top 50%',
-      toggleActions: 'play none none none',
-      once: true,
-      invalidateOnRefresh: false,
-      id: `project-overlay-right-${Math.random().toString(36).substr(2, 9)}`,
-    };
-
-    gsap.to(imageOverlay.value, {
-      x: -overlayWidth,
-      duration: 2,
-      ease: 'power1.inOut',
-      force3D: true,
-      scrollTrigger: scrollTriggerConfig,
-    });
+  if (!gsap || !ScrollTrigger || !imageOverlay.value || !imageContainer.value) return;
+  
+  const isMobile = window.innerWidth <= 768;
+  
+  if (!imageOverlay.value.classList.contains('project-image-overlay')) {
+    imageOverlay.value.classList.add('project-image-overlay');
   }
+  
+  const overlayWidth = imageOverlay.value.offsetWidth;
+  
+  gsap.killTweensOf(imageOverlay.value);
+  imageOverlay.value.style.transform = '';
+  imageOverlay.value.style.transition = 'none';
+  
+  gsap.set(imageOverlay.value, {
+    x: 0,
+    force3D: true
+  });
+
+  const scrollTriggerConfig: any = {
+    trigger: imageContainer.value,
+    start: isMobile ? 'top 90%' : 'top 80%',
+    end: 'top 50%',
+    toggleActions: 'play none none none',
+    once: true,
+    invalidateOnRefresh: true,
+    id: `project-overlay-right-${Math.random().toString(36).substr(2, 9)}`,
+  };
+
+  gsap.to(imageOverlay.value, {
+    x: -overlayWidth,
+    duration: isMobile ? 1.5 : 2,
+    ease: 'power1.inOut',
+    force3D: true,
+    scrollTrigger: scrollTriggerConfig,
+  });
 };
 
 export const initServicesAnimations = (
@@ -632,16 +636,6 @@ export const initGalleryAnimations = (
     });
 
  
-    const scrollMoveConfig: any = {
-      trigger: galleryContainer.value || image,
-      start: isMobile ? 'top 85%' : 'top 80%',
-      end: 'bottom top',
-      scrub: scrubValue,
-      invalidateOnRefresh: true,
-      markers: false,
-    };
-
-  
     // Valores base de movimento (desktop)
     const baseMovements = [
       { x: -90, y: 45 },     
@@ -660,12 +654,23 @@ export const initGalleryAnimations = (
     const movement = movements[index] || { x: 0, y: 0 };
 
     if (movement.x !== 0 || movement.y !== 0) {
+      const scrollMoveConfig: any = {
+        trigger: galleryContainer.value || image,
+        start: isMobile ? 'top 85%' : 'top 80%',
+        toggleActions: 'play none none none',
+        once: true,
+        invalidateOnRefresh: true,
+        markers: false,
+      };
+
       gsap.to(image, {
         x: movement.x,
         y: movement.y,
-        ease: 'none',
+        duration: durationValue,
+        ease: 'power2.out',
         force3D: true,
         scrollTrigger: scrollMoveConfig,
+        delay: delay,
       });
     }
   };

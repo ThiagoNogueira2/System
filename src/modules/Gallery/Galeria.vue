@@ -30,7 +30,7 @@
 
             
                 <div 
-                    class="absolute z-[7] max-lg:w-[35%] max-lg:top-[75%] lg:w-[33.33%] lg:top-[30.29%] gallery-item" 
+                    class="absolute z-[7] max-lg:w-[38%] max-lg:top-[80%] lg:w-[33.33%] lg:top-[30.29%] gallery-item" 
                     :style="{
                         right: '68.22%'
                     }"
@@ -59,7 +59,7 @@
 
                 
                 <div 
-                    class="absolute z-[8] max-lg:w-[35%] max-lg:top-[75%] lg:w-[33.33%] lg:top-[30.43%] gallery-item" 
+                    class="absolute z-[8] max-lg:w-[38%] max-lg:top-[85%] lg:w-[33.33%] lg:top-[30.43%] gallery-item" 
                     :style="{
                         left: '67.98%'
                     }"

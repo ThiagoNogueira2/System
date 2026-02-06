@@ -8,6 +8,7 @@
    <Gallery />
    <Review />
    <Partner />
+   <Footer />
 
 </template>
 
@@ -20,6 +21,7 @@
     import Gallery from './modules/Gallery/Galeria.vue'
     import Review from './modules/Review/Visualizacao.vue'
     import Partner from './modules/Partner/Conosco.vue'
+    import Footer from './modules/Footer/Footer.vue'
     import Projects from './modules/Project/Projeto.vue'
     import { useSmoothScroll } from './composables/useSmoothScroll'
 

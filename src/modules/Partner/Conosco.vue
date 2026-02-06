@@ -1,12 +1,12 @@
 <template>
   <div class="container1">
-    <div class="flex justify-between items-start pt-40 gap-24 ">
-      <div class="flex-1">
-        <h1 class="text-7xl font-bold pb-6" style="color: #1e1e1e">
+    <div class="flex flex-col lg:flex-row justify-between items-center lg:items-start pt-10 lg:pt-40 gap-8 lg:gap-24 lg:px-0">
+      <div class="flex-1 w-full lg:w-auto">
+        <h1 class="text-4xl md:text-5xl lg:text-7xl font-bold pb-6 text-center lg:text-left" style="color: #1e1e1e">
           PARTNER WITH US
         </h1>
         <p
-          class="text-[#666] leading-[150%] font-medium  leading-[170%] mb-12"
+          class="text-[#666] leading-[150%] font-medium  leading-[170%] mb-12 text-center lg:text-left"
           style="font-size: 0.87rem"
         >
           If you're someone who's looking to bring a space to life, share a few
@@ -49,16 +49,16 @@
           ></textarea>
         </div>
 
-        <div class="pb-20">
+        <div class="">
           <button class="w-full  mt-2 py-2 text-white cursor-pointer" style="background: #1e1e1e;">SUBMIT</button>
         </div>
       </div>
 
-      <div class="flex-1 flex justify-end">
+      <div class="flex-1 w-full lg:w-auto flex justify-center lg:justify-end">
         <img 
           src="/src/assets/images/partner.jpeg" 
           alt="Partner" 
-          class="w-full h-auto object-cover -mt-[320px]"
+          class="w-full h-auto object-cover rounded-xl lg:rounded-none shadow-lg lg:shadow-none mt-0 lg:-mt-[320px]"
         />
       </div>
     </div>
